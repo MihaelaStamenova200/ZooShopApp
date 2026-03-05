@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36310.24 d17.14
+VisualStudioVersion = 17.14.36310.24
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooShopApp", "ZooShopApp\ZooShopApp.csproj", "{BE568513-1362-4072-BD11-0F66565B07C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooShopApp.Infrastructure", "ZooShopApp.Infrastructure\ZooShopApp.Infrastructure.csproj", "{75B2AF07-690A-4D9A-A37D-C42A352ADE59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooShopApp.Core", "ZooShopApp.Core\ZooShopApp.Core.csproj", "{302B0EA1-A610-414F-AD63-AF93AD8B01E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{75B2AF07-690A-4D9A-A37D-C42A352ADE59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75B2AF07-690A-4D9A-A37D-C42A352ADE59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75B2AF07-690A-4D9A-A37D-C42A352ADE59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{302B0EA1-A610-414F-AD63-AF93AD8B01E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{302B0EA1-A610-414F-AD63-AF93AD8B01E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{302B0EA1-A610-414F-AD63-AF93AD8B01E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{302B0EA1-A610-414F-AD63-AF93AD8B01E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
