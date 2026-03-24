@@ -19,7 +19,7 @@ namespace ZooShopApp.Infrastructure.Data.Domain
         public virtual Product Product { get; set; } = null!;
         [Required]
         [ForeignKey(nameof(ApplicationUser))]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; } = null!;
         [Range(0, 5000)]
         public int Quantity { get; set; }

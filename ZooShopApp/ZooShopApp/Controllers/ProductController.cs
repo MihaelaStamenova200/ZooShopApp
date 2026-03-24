@@ -35,6 +35,7 @@ namespace ZooShopApp.Controllers
                     CategoryId = product.CategoryId,
                     CategoryName = product.Category.Name,
                     Picture = product.Picture,
+                    Description = product.Description,
                     Quantity = product.Quantity,
                     Price = product.Price,
                     Discount = product.Discount
