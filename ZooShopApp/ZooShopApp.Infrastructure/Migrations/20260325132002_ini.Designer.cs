@@ -12,7 +12,7 @@ using ZooShopApp.Infrastructure.Data;
 namespace ZooShopApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260324103022_ini")]
+    [Migration("20260325132002_ini")]
     partial class ini
     {
         /// <inheritdoc />
