@@ -1,8 +1,131 @@
-﻿@{
+﻿@model List<ZooShopApp.Models.Product.ProductIndexVM>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+
+<!-- Hero -->
+    <div class="hero-full">
+
+        <div class="hero-inner">
+            <div class="hero-content">
+                <h1>🐾 Най-доброто за твоето животно</h1>
+                <p>Премиум храни и аксесоари</p>
+
+                <a asp-controller="Product" asp-action="Index" class="btn btn-hero">
+                    Разгледай продукти
+                </a>
+            </div>
+
+            <div class="hero-image">
+                <img src="/images/kucheta-99453-1000x0.jpg" />
+            </div>
+        </div>
+
+    </div>
+
+
+<!-- Популярни продукти -->
+<h2 class="text-center mb-4">🔥 Най-популярни продукти</h2>
+
+<div class="row justify-content-center">
+
+    @foreach (var product in Model)
+    {
+        <div class="col-md-4">
+            <div class="card custom-card text-center">
+
+                <img class="card-img-top" src="@product.Picture" alt="Product Image">
+
+                <div class="card-body">
+                    <h5>@product.ProductName</h5>
+
+                    @if (product.Discount > 0)
+                    {
+                        var newPrice = product.Price - product.Price * product.Discount / 100;
+
+                        <p class="old-price">@product.Price.ToString("F2") лв.</p>
+                        <h6 class="new-price">@newPrice.ToString("F2") лв.</h6>
+                    }
+                    else
+                    {
+                        <h6 class="new-price">@product.Price.ToString("F2") лв.</h6>
+                    }
+
+                    <a asp-controller="Product"
+                       asp-action="Details"
+                       asp-route-id="@product.Id"
+                       class="btn btn-outline-dark w-100 mb-2">
+                        Детайли
+                    </a>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="Order"
+                           asp-action="Create"
+                           asp-route-id="@product.Id"
+                           class="btn btn-primary w-100">
+                            Поръчай
+                        </a>
+                    }
+                </div>
+
+            </div>
+        </div>
+    }
+
 </div>
+
+<h2 class="text-center mt-5 mb-4">МЕСЕЧНИ ПРЕДЛОЖЕНИЯ</h2>
+
+<div class="offer-section">
+
+    <!-- ЛЯВО -->
+    <a asp-controller="Product"
+       asp-action="Index"
+       
+       class="offer-side">
+
+        <img src="/images/dog.jpg" />
+        <div class="offer-label">ХРАНИ ЗА КУЧЕТА</div>
+
+    </a>
+
+    <!-- ЦЕНТЪР (СЛАЙДЕР) -->
+    <div class="offer-center">
+
+        <div class="slide active">
+            <img src="/images/dogFood1.jpg" />
+            <h5>Bravery</h5>
+            <p>Храна за кучета</p>
+        </div>
+
+        <div class="slide">
+            <img src="/images/catFood.jpg" />
+            <h5>Whiskas</h5>
+            <p>Храна за котки</p>
+        </div>
+
+        <div class="slide">
+            <img src="/images/dogFood2.jpg" />
+            <h5>Duck DogFood</h5>
+            <p>Премиум храна</p>
+        </div>
+
+    </div>
+
+    <!-- ДЯСНО -->
+    <a asp-controller="Product"
+       asp-action="Index"
+       
+       class="offer-side">
+
+        <img src="/images/cat.jpg" />
+        <div class="offer-label">ХРАНИ ЗА КОТКИ</div>
+
+    </a>
+
+</div>
+
+<footer class="footer text-center mt-5">

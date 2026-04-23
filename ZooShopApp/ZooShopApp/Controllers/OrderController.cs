@@ -59,8 +59,10 @@ namespace ZooShopApp.Controllers
         public ActionResult Create(int id)
         {
             Product product = _productService.GetProductById(id);
-            if (product == null) return NotFound();
-
+            if (product == null)
+            {
+                return NotFound();
+            }
             OrderCreateVM order = new OrderCreateVM()
             {
                 ProductId = product.Id,
@@ -74,30 +76,30 @@ namespace ZooShopApp.Controllers
         }
 
 
-        // POST: OrderController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(OrderCreateVM bindingModel)
-        {
-            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var product = _productService.GetProductById(bindingModel.ProductId);
+		// POST: OrderController/Create
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Create(OrderCreateVM bindingModel)
+		{
+			string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var product = _productService.GetProductById(bindingModel.ProductId);
 
-            if (currentUserId == null || product == null || product.Quantity < bindingModel.Quantity || product.Quantity == 0)
-            {
+			if (currentUserId == null || product == null || product.Quantity < bindingModel.Quantity || product.Quantity == 0)
+			{
                 return RedirectToAction("Denied", "Order");
-            }
+			}
 
-            if (ModelState.IsValid)
-            {
-                _orderService.Create(bindingModel.ProductId, currentUserId, bindingModel.Quantity);
-                return RedirectToAction("Index", "Product");
-            }
+			if (ModelState.IsValid)
+			{
+				_orderService.Create(bindingModel.ProductId, currentUserId, bindingModel.Quantity);
+				
+			}
 
-            return View(bindingModel);
-        }
+			return RedirectToAction("Index", "Product");
+		}
 
-        // GET: OrderController/Edit/5
-        public ActionResult Edit(int id)
+		// GET: OrderController/Edit/5
+		public ActionResult Edit(int id)
         {
             return View();
         }

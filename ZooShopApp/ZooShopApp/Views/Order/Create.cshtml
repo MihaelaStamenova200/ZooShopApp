@@ -1,73 +1,82 @@
-﻿
-
-@model ZooShopApp.Models.Order.OrderCreateVM
+﻿@model ZooShopApp.Models.Order.OrderCreateVM
 @{
-ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create";
 }
-<h1>Order</h1>
-<hr />
-<div class="row">
-	<div class="col-md-4">
-		<form asp-action="Create">
-			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<div class="form-group">
-				<input type="hidden" asp-for="ProductId" class="form-control"
-					   readonly="readonly" />
-			</div>
-			<div class="form-group">
-				<label asp-for="ProductName" class="control-label"></label>
-				<input asp-for="ProductName" class="form-control" readonly="readonly" />
-			</div>
-			<div class="form-group">
-				<label asp-for="Picture" class="control-label"></label>
-				<input type="hidden" asp-for="Picture" class="form-control"
-					   readonly="readonly" />
-				<div>
-					<img src="@Html.DisplayFor(model => model.Picture)" alt="Image"
-						 width="100" />
-				</div>
-			</div>
-			<div class="form-group">
-				<label asp-for="Price" class="control-label"></label>
-				<input asp-for="Price" class="form-control" readonly="readonly" />
-			</div>
-			<div class="form-group">
-				<label asp-for="Discount" class="control-label"></label>
-				<input asp-for="Discount" class="form-control" readonly="readonly" />
-			</div>
-			<div class="form-group">
-				<label asp-for="Quantity" class="control-label"></label>
-				<input asp-for="Quantity" class="form-control" onclick="calcSum()" />
-				<span asp-validation-for="Quantity" class="text-danger"></span>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
-			</div>
-			<div class="form-group">
-				<label asp-for="TotalPrice" class="control-label"></label>
-				<input asp-for="TotalPrice" class="form-control" readonly="readonly" />
-			</div>
-			<br />
-			<div class="form-group">
-				<input type="submit" value="Order" class="btn btn-primary" />
 
-				<a asp-action="Index" asp-controller="Product" class="btn btn-warning">Back to Products</a>
 
-			</div>
-		</form>
-	</div>
+<a asp-action="Index" asp-controller="Product" class="back-link">← Обратно към продуктите</a>
+
+<div class="page-eyebrow">Нова поръчка</div>
+<h1 class="page-title">Завърши <em>поръчката</em></h1>
+
+<div class="order-layout">
+    <div class="order-img-side">
+        <img src="@Html.DisplayFor(model => model.Picture)" alt="@Model.ProductName" />
+    </div>
+    <div class="order-form-side">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <input type="hidden" asp-for="ProductId" />
+            <input type="hidden" asp-for="Picture" />
+
+            <div class="prod-name-display">@Html.DisplayFor(model => model.ProductName)</div>
+            <input type="hidden" asp-for="ProductName" />
+
+            <div class="prod-price-display">@Html.DisplayFor(model => model.Price) лв.</div>
+            <input type="hidden" asp-for="Price" />
+
+            @if (Model.Discount > 0)
+            {
+                <div class="prod-discount-display">Отстъпка: @Html.DisplayFor(model => model.Discount)%</div>
+            }
+            <input type="hidden" asp-for="Discount" />
+
+            <hr class="form-divider" />
+
+            <div class="field-group">
+                <label asp-for="Quantity" class="field-label">Количество (макс. @Model.QuantityInStock)</label>
+                <input asp-for="Quantity" class="field-input" oninput="calcSum()" placeholder="Въведи количество" />
+                <span asp-validation-for="Quantity" class="field-error"></span>
+            </div>
+
+            <div class="total-box">
+                <span class="total-label">Обща сума</span>
+                <span class="total-value"><span id="total-display">0.00</span> лв.</span>
+            </div>
+            <input type="hidden" asp-for="TotalPrice" id="TotalPrice" />
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Поръчай сега</button>
+                <a asp-action="Index" asp-controller="Product" class="btn-cancel">Откажи</a>
+            </div>
+        </form>
+    </div>
 </div>
+
 <script>
-	function calcSum() {
-	let q = document.getElementsByName('Quantity')[0].value;
-	let p = document.getElementsByName('Price')[0].value;
-	let d = document.getElementsByName('Discount')[0].value;
-	let sum = Number(q) * (Number(p) - Number(p) * Number(d) / 100);
-	document.getElementsByName('TotalPrice')[0].value = sum.toFixed(2)
-	}
-	document.getElementById('Quantity').max = @Model.QuantityInStock;
-	document.getElementById('Quantity').min = 1;
+    var maxQty = @Model.QuantityInStock;
+    var qtyInput = document.getElementById('Quantity');
+    qtyInput.max = maxQty;
+    qtyInput.min = 1;
+
+    function calcSum() {
+        let q = document.getElementsByName('Quantity')[0].value;
+        let p = @Model.Price;
+        let d = @Model.Discount;
+        let sum = Number(q) * (p - p * d / 100);
+        let rounded = sum.toFixed(2);
+        document.getElementById('TotalPrice').value = rounded;
+        document.getElementById('total-display').textContent = rounded;
+    }
+
+    calcSum();
 </script>
+
 @section Scripts {
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

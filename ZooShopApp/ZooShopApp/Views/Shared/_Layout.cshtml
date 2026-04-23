@@ -10,86 +10,70 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ZooShopApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
-                        </li>
-                        <li class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                Products
+        <nav class="navbar custom-navbar">
+
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+
+                <!-- ЛЯВО -->
+                <div class="d-flex gap-3">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Начало</a>
+                    <a class="nav-link" asp-controller="Product" asp-action="Index">Продукти</a>
+                </div>
+
+                <!-- ЦЕНТЪР -->
+                <a class="navbar-brand center-logo"
+                   asp-controller="Home"
+                   asp-action="Index">
+                    🐾 ZooShopApp
+                </a>
+
+                <!-- ДЯСНО -->
+                <div class="d-flex gap-3 align-items-center">
+
+                    <a class="nav-link" asp-controller="Favorite" asp-action="MyFavorites">
+                        ❤️ Любими
+                    </a>
+
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <a class="nav-link" asp-controller="Order" asp-action="MyOrders">
+                            📦 Поръчки
+                        </a>
+                    }
+
+                    <a class="nav-link" asp-controller="Home" asp-action="Contacts">
+                        📞 Контакти
+                    </a>
+
+                    @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Administrator"))
+                    {
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle"
+                                    data-bs-toggle="dropdown">
+                                Админ
                             </button>
 
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li>
-                                    <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-searchStringBrandName="Brit">Brit</a>
-                                    <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-searchStringBrandName="Essentials">Essentials</a>
-                                    <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-searchStringBrandName="Alpha Spirit">Alpha Spirit</a>
-                                    <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-searchStringBrandName="Vet Life">Vet Life</a>
-                                    <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-searchStringBrandName="Purina">Purina</a>
-                                    <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-searchStringBrandName="Hills">Hills</a>
-                                    <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-searchStringBrandName="N&D">N&D</a>
-                                    
-                                </li>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/Client/Index">Клиенти</a></li>
+                                <li><a class="dropdown-item" href="/Order/Index">Поръчки</a></li>
+                                <li><a class="dropdown-item" href="/Statistic/Index">Статистики</a></li>
                             </ul>
-                        </li>
+                        </div>
+                    }
 
-                        @if (this.User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="MyOrders">My Orders</a>
-                            </li>
-                        }
-                        @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Administrator"))
-                        {
-                            <li class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle"
-                                        type="button"
-                                        id="dropdownMenuButton1"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                    Statistic Modul
-                                </button>
-
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="/Client/Index">Clients</a></li>
-                                    <li><a class="dropdown-item" href="/Order/Index">Orders</a></li>
-                                    <li><a class="dropdown-item" href="/Statistic/Index">Statistics</a></li>
-                                </ul>
-                            </li>
-                        }
-
-                    </ul>
                     <partial name="_LoginPartial" />
+
                 </div>
+
             </div>
+
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+  
+        <main class="container">
             @RenderBody()
         </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - ZooShopApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
